@@ -20,6 +20,10 @@ CREATE TABLE new_customer_orders AS
         TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(extras, ',', - 1), ',', 1)) 
 	FROM customer_orders;
 
+-- Set the data type of extras and exclusions as INTEGER
+ALTER TABLE new_customer_orders MODIFY COLUMN exclusion INTEGER;
+ALTER TABLE new_customer_orders MODIFY COLUMN extra INTEGER;
+
 -- Drop the originl `exclusions` and `extras` column from new table
 ALTER TABLE new_customer_orders DROP COLUMN exclusions;
 ALTER TABLE new_customer_orders DROP COLUMN extras;
@@ -40,3 +44,9 @@ UPDATE runner_orders
 -- Update the `cancellation` column with meaningful string for orders not cancelled
 UPDATE runner_orders
 	SET cancellation = "Not cancelled" WHERE cancellation = '' or cancellation IS NULL or cancellation = "null";
+    
+-- Set data type of `distance` column as FLOAT
+ALTER TABLE runner_orders MODIFY COLUMN distance FLOAT;
+
+-- Set data type of `duration` column as INTEGER
+ALTER TABLE runner_orders MODIFY COLUMN duration INTEGER;
